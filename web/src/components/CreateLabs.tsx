@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
-import axios from '../axios'; // Use the axios instance
+import axios, { createLab } from '../axios'; // Use the axios instance
+import { LabWithSubs } from '../types';
+
+interface Substance {
+    substance_name: string;
+    x: number;
+    y: number;
+    case_type: string;
+}
 
 const CreateLab = () => {
   const [labName, setLabName] = useState('');
   const [goal, setGoal] = useState('');
-  const [substances, setSubstances] = useState([]);
+  const [substances, setSubstances] = useState<Substance[]>([]);
 
   const availableSubstances = ['HCl', 'Water', 'Sodium'];
 
-  const handleDrop = (substance) => {
+  const handleDrop = (substance: string) => {
     setSubstances([...substances, { substance_name: substance, x: 0, y: 0, case_type: 'flask' }]);
   };
 
   const handleCreateLab = () => {
-    const labData = {
+    const labData: LabWithSubs = {
       lab_name: labName,
       goal: goal,
       substances: substances,
     };
 
-    axios.post('/labs/', labData)
+    createLab(labData)
       .then(response => {
         console.log('Lab created:', response.data);
         window.location.href = '/';

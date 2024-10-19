@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../axios'; // Use the axios instance
+import { getLabs } from '../axios'; // Use the axios instance
 import './LabList.css'; // Import the CSS for styling
+import { Lab } from '../types';
 
-const LabList = () => {
-  const [labs, setLabs] = useState([]);
-  const [selectedLab, setSelectedLab] = useState(null);
+interface LabListProps {
+  onEnterLab: (id: number) => void;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const LabList = (props: LabListProps) => {
+  // const { onEnterLab } = props;
+  const [labs, setLabs] = useState<Lab[]>([]);
+  const [selectedLab, setSelectedLab] = useState<number | null>(null);
 
   useEffect(() => {
-    axios.get('/labs/')
+    getLabs()
       .then(response => {
         setLabs(response.data);
       })
@@ -16,11 +23,11 @@ const LabList = () => {
       });
   }, []);
 
-  const toggleLab = (labId) => {
+  const toggleLab = (labId: number) => {
     setSelectedLab(selectedLab === labId ? null : labId);
   };
 
-  const enterLab = (labId) => {
+  const enterLab = (labId: number) => {
     window.location.href = `/labs/${labId}`;  // Redirect to the lab page with the correct labId
   };
 
