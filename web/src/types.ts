@@ -1,5 +1,3 @@
-import { getSubstances } from "./axios";
-
 import flaskBTBImg from './assets/Flask-BTB.png';
 import flaskBTBH2OImg from './assets/Flask-BTB+H2O.png';
 import flaskBTBHCLImg from './assets/Flask-BTB+HCL.png';

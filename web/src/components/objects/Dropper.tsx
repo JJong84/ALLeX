@@ -1,13 +1,13 @@
 import React from 'react';
 import dropper from '../../assets/dropper.png';
-import { substanceImages, SubstanceNames } from '../../types';
+import { SubstanceNames } from '../../types';
 
 interface ImageWrapperProps {
   width: string;
   substanceName: SubstanceNames | "";
 }
 
-const Dropper: React.FC<ImageWrapperProps> = ({ width, substanceName }) => {
+const Dropper: React.FC<ImageWrapperProps> = ({ width }) => {
   const Image = () => {
     return <img src={dropper} alt="Dropper" />;
   }

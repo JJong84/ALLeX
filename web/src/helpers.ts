@@ -1,4 +1,4 @@
-import { Rectangle, Substance, SubstanceNames } from "./types";
+import { Rectangle, SubstanceNames } from "./types";
 
 const isOverlapping = (rectA: Rectangle, rectB: Rectangle) => {
     const rectARight = rectA.left + rectA.width;

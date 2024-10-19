@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Human, { Config, HandType } from '@vladmandic/human'
+import Human, { Config, Point } from '@vladmandic/human'
 import DetectedHand from './DetectedHand';
 import { DEFAULT_SIZE, Inventory, ObjectType, Rectangle, SubstanceNames, SubstanceProps } from '../types';
 import SubstanceComp from './Substance';
@@ -21,8 +21,7 @@ const humanConfig: Partial<Config> = {
     backend: 'tensorflow'
 };
 
-const HAND_STATE_THRESHOLD = 3; // 5 프레임 동안 유지
-const FIST_DETECTION_DELAY = 3; // 10 프레임 동안 상태를 유지
+const THRESHHOLD = 260;
 
 interface Props {
     inventory?: Inventory;
@@ -33,8 +32,6 @@ function Detection({inventory}: Props) {
     const [resolution, setResolution] = useState<{width?: number; height?: number;}>({ width: 640, height: 480 });
     const [human, setHuman] = useState<Human | null>(null);
     const [detectedHand, setDetectedHand] = useState<Rectangle | undefined>(undefined);
-    // @ts-ignore
-    const [detectedHandLabel, setDetectedHandLabel] = useState<HandType | undefined>(undefined);
     const [attachedSubstanceId, setAttachedSubstanceId] = useState<number | undefined>(undefined);
 
     const [substances, setSubstances] = useState<SubstanceProps[]>([]);
@@ -76,12 +73,7 @@ function Detection({inventory}: Props) {
         }
     }, [inventory]);
 
-    const [handStateHistory, setHandStateHistory] = useState<boolean[]>([]);
     const [isFistState, setIsFistState] = useState<boolean>(false);
-    const [frameCounter, setFrameCounter] = useState<number>(0);
-    const isFist = (label?: HandType): boolean => {
-        return label == "fist" || label == "point" || label == "pinch";
-    }
 
     useEffect(() => {
         // 비디오 스트림 시작
@@ -108,6 +100,29 @@ function Detection({inventory}: Props) {
         setHuman(new Human(humanConfig));
     }, []);
 
+    const calculateFingerDistance = (keypoints: Point[]) => {
+        const fingerPairs = [
+            [5, 8],   // Index finger
+            [9, 12],  // Middle finger
+            [13, 16], // Ring finger
+            [17, 20], // Pinky
+            [1, 4]    // Thumb
+        ];
+
+        let totalDistance = 0;
+
+        fingerPairs.forEach(([startIdx, endIdx]) => {
+            const start = keypoints[startIdx];
+            const end = keypoints[endIdx];
+            const distance = Math.sqrt(
+                Math.pow(start[0] - end[0], 2) + Math.pow(start[1] - end[1], 2)
+            );
+            totalDistance += distance;
+        });
+        console.log(totalDistance);
+        return totalDistance;
+    };
+
     async function detectionLoop() { // main detection loop
         const input = videoRef.current;
         if (!input) {
@@ -121,7 +136,8 @@ function Detection({inventory}: Props) {
                 requestAnimationFrame(detectionLoop);
                 return;
             }
-            const firstHand = hand[0];
+            const firstHand = hand[0]; 
+            console.log(firstHand);
             const [left, top, width, height] = firstHand.box;
             // console.log(resolution);
             if (!resolution.width || !resolution.height) {
@@ -134,34 +150,18 @@ function Detection({inventory}: Props) {
             setDetectedHand({
                 height: height * heightRatio, width: width * widthRatio, top: top * heightRatio, left: left * widthRatio
             })
+
+            const fingerDistance = calculateFingerDistance(firstHand.keypoints);
             
-            const currentFistState = isFist(firstHand.label);
-            setHandStateHistory((prevHistory) => {
-                const newHistory = [...prevHistory, currentFistState];
-                if (newHistory.length > HAND_STATE_THRESHOLD) {
-                    newHistory.shift(); // 오래된 기록은 제거
-                }
-                return newHistory;
-            });
-            setDetectedHandLabel(firstHand.label);
+            if (fingerDistance < THRESHHOLD) {
+                setIsFistState(true);
+            } else {
+                setIsFistState(false);
+            }
         }
 
         requestAnimationFrame(detectionLoop); // start new frame immediately
     }
-
-    useEffect(() => {
-        // 손 상태를 유지할지 여부를 결정
-        if (handStateHistory.filter((state) => state).length >= HAND_STATE_THRESHOLD - 1) {
-            setIsFistState(true);
-            setFrameCounter(0); // 상태가 유지될 프레임 카운터 초기화
-        } else {
-            if (frameCounter < FIST_DETECTION_DELAY) {
-                setFrameCounter((prevCounter) => prevCounter + 1); // 카운터 증가
-            } else {
-                setIsFistState(false); // 카운터가 임계값을 넘으면 상태 전환
-            }
-        }
-    }, [handStateHistory, frameCounter]);
 
     useEffect(() => {
         requestAnimationFrame(detectionLoop);
@@ -223,7 +223,6 @@ function Detection({inventory}: Props) {
                 addDropperToFlask();
             }
             setDetectedHand(undefined);
-            setDetectedHandLabel(undefined);
             setAttachedSubstanceId(undefined);
         }
         else if (detectedHand && isFistState) {
