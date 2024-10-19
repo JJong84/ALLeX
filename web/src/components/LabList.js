@@ -24,6 +24,10 @@ const LabList = () => {
     window.location.href = `/labs/${labId}`;  // Redirect to the lab page with the correct labId
   };
 
+  const createLab = () => {
+    window.location.href = '/create-lab';  // Redirect to the Create Lab page
+  };
+
   return (
     <div className="lab-list-page">
       <h2>학습리스트</h2>
@@ -49,6 +53,11 @@ const LabList = () => {
           )}
         </div>
       ))}
+      
+      {/* Create Lab Button */}
+      <button className="create-lab-btn" onClick={createLab}>
+        새로운 학습 생성하기
+      </button>
     </div>
   );
 };
