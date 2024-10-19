@@ -111,40 +111,41 @@ const CreateLab = () => {
 
       {/* Sidebar */}
       <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <h2>{activeTab === 'Tools' ? 'Tools' : 'Materials'}</h2>
-        </div>
-
         {/* Tabs */}
         <div className="tabs">
           <button
             className={`tab ${activeTab === 'Tools' ? 'active' : ''}`}
             onClick={() => setActiveTab('Tools')}
           >
-            Tools
+            도구
           </button>
           <button
             className={`tab ${activeTab === 'Materials' ? 'active' : ''}`}
             onClick={() => setActiveTab('Materials')}
           >
-            Materials
+            물질
           </button>
+          {
+            sidebarOpen &&
+              <button className={`sidebar-header-toggle ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(!sidebarOpen)}>
+                &#9776;
+                </button>
+          }
         </div>
         
         {/* Tab content */}
         <div className="tab-content">
           {activeTab === 'Tools' ? (
             <div>
-              <h3>Available Tools</h3>
+              <h3>용액 취급 도구</h3>
               {availableTools.map((tool, index) => (
                 <div
                   key={index}
                   onClick={() => handleDrop(tool === '플라스크' ? 'flask' : 'bottle')}
+                  className='sidebar-button'
                   style={{
                     cursor: 'pointer',
                     padding: '5px',
-                    backgroundColor: '#ddd',
-                    marginBottom: '10px'
                   }}>
                   {tool}
                 </div>
@@ -152,19 +153,18 @@ const CreateLab = () => {
             </div>
           ) : (
             <div>
-              <h3>Available Materials</h3>
+              {/* <h3>구분1</h3> */}
               {materials.length === 0 ? (
                 <p>Loading materials...</p>
               ) : (
                 materials.map(material => (
                   <div
+                    className="sidebar-button"
                     key={material}
                     onClick={() => handleAssignSubstance(material)}
                     style={{
                       cursor: 'pointer',
                       padding: '5px',
-                      backgroundColor: '#ddd',
-                      marginBottom: '10px'
                     }}>
                     {material}
                   </div>
@@ -176,10 +176,12 @@ const CreateLab = () => {
       </div>
 
       {/* Button to toggle sidebar */}
-      <button className={`sidebar-toggle ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(!sidebarOpen)}>
-        &#9776;
-      </button>
-
+      {
+        !sidebarOpen &&
+          <button className={`sidebar-toggle ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(!sidebarOpen)}>
+          &#9776;
+        </button>
+      }
       <div className="substance-container">
         {/* Render substances as draggable images */}
         {substances.map((substance, index) => (
@@ -215,18 +217,18 @@ const CreateLab = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Lab Setup</h2>
-            <label>Lab Name:</label>
+            {/* <h2>Lab Setup</h2> */}
+            <label>제목</label>
             <input
               value={labName}
               onChange={(e) => setLabName(e.target.value)}
-              placeholder="Enter lab name"
+              placeholder="실험 제목을 입력해주세요."
             />
-            <label>Goal:</label>
+            <label>목표</label>
             <input
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              placeholder="Enter lab goal"
+              placeholder="실험 목표를 입력해주세요."
             />
             <div className="modal-actions">
               <button
@@ -244,9 +246,10 @@ const CreateLab = () => {
       {!showModal && (
         <>
           <div className="bottom-button-container">
-            <button className="create-lab-button" onClick={handleCreateLab}>Create Lab</button>
+            <button className="create-lab-button" onClick={handleCreateLab}>실험 생성</button>
           </div>
         </>
+
       )}
     </div>
   );

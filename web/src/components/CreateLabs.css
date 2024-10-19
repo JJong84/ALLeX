@@ -16,71 +16,103 @@
   }
   
   .create-lab-button {
-    padding: 10px 20px;
-    background-color: #0066cc;
+    background-color: #294DFF;
     color: white;
     border: none;
+    /* padding: 10px 20px; */
+    border-radius: 1000px;
+    width: 171px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border-radius: 5px;
   }
   
   .create-lab-button:hover {
-    background-color: #004a99;
+    background-color: #002ECC;
   }
 
 /* Sidebar styling */
 .sidebar {
     position: fixed;
     top: 0;
-    left: -250px; /* Hidden off-screen */
-    width: 250px;
+    left: -324px; /* Hidden off-screen */
+    width: 304px;
     height: 100vh;
-    background-color: #333;
+    background-color: #294DFF;
     color: white;
     padding: 20px;
     transition: left 0.3s ease;
-    z-index: 1000;
+    z-index: 998;
   }
   
   .sidebar.open {
     left: 0; /* Slide in when open */
   }
   
-  .sidebar-header {
-    margin-bottom: 20px;
-  }
-  
   .sidebar .tabs {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    padding-bottom: 16px;
+    margin-bottom: 16x;
+    border-bottom: 1px solid #999999;
   }
   
   .tab {
-    flex: 1;
+    min-width: 106px;
     padding: 10px;
-    background-color: #444;
+    background-color: #294DFF;
     color: white;
     border: none;
     cursor: pointer;
     text-align: center;
+
+    border-radius: 20px;
+    outline: none;
   }
   
   .tab.active {
-    background-color: #0066cc;
+    background-color: #000000;
   }
   
   .tab-content {
     margin-top: 20px;
+
+    h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 40px;
+      text-align: start;
+    }
   }
   
   /* Sidebar Toggle Button */
   .sidebar-toggle {
+    padding: 0;
+    width: 40px;
+    height: 40px;
     position: fixed;
     top: 10px;
-    left: 0; /* Align with the sidebar */
-    margin-left: 250px; /* Start off to the right of the hidden sidebar */
+    left: 36px; /* Align with the sidebar */
     font-size: 30px;
+    background-color: #294DFF;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: margin-left 0.3s ease; /* Slide the button along with the sidebar */
+    z-index: 999;
+  }
+
+  .sidebar-toggle:hover {
+    background-color: #4363FF;
+  }
+
+  .sidebar-header-toggle {
+    width: 40px; */
+    height: 40px;
+    padding: 0;
+    font-size: 30px;
+    position: absolute;
+    right: 16px;
     background-color: transparent;
     border: none;
     color: white;
@@ -88,12 +120,21 @@
     transition: margin-left 0.3s ease; /* Slide the button along with the sidebar */
     z-index: 1100;
   }
+
+  .sidebar-header-toggle:hover {
+    background-color: #4363FF;
+  }
   
   .sidebar-toggle.open {
-    margin-left: 250px; /* Stay to the right of the open sidebar */
+    margin-left: 304px; /* Stay to the right of the open sidebar */
   }
   
   /* Modal styling to center it on the page */
+  label {
+    line-height: 36px;
+    font-size: 24px;
+  }
+
   .modal {
     position: fixed;
     top: 0;
@@ -108,16 +149,16 @@
   }
   
   .modal-content {
-    background: #333;
-    padding: 20px;
+    background: #191919;
+    padding: 32px 20px;
     border-radius: 10px;
     width: 400px;
     color: white;
-    text-align: center;
+    text-align: start;
   }
   
   .modal-content input {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
@@ -126,6 +167,14 @@
   
   .modal-actions {
     margin-top: 20px;
+
+    button {
+      padding: 16px 24px;
+      border-radius: 1000px;
+      background-color: #1F1F1F;
+    }
+
+    text-align: center;
   }
   
   button:disabled {
@@ -140,10 +189,7 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  button:hover:enabled {
-    background-color: #004a99;
+    outline: none;
   }
 
   .substance-container {
@@ -153,5 +199,21 @@
     left: 0;
     width: 100vw;
     height: 1000vh;
+    background-color: #000000;
+  }
+
+  .sidebar-button {
+    height: 40px;
+    width: 100%;
+    background: #294DFF;
+    color: white;
+    border-bottom: 1px solid #999999;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .sidebar-button:hover {
+    background-color: #4363FF;
   }
   

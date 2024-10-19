@@ -50,6 +50,12 @@ interface LabWithSubs {
     substances: Substance[];
 }
 
+interface GetSubstancesInLab {
+    lab_id: number,
+    lab_name: string,
+    substances: Inventory,
+}
+
 type Inventory = {
     entity_id: number,
     substance_name: SubstanceNames;
@@ -131,6 +137,6 @@ const emptyBottleImages: Record<string, string> = {
   '암모니아': emptyNh3Img,
 }
 
-export type {Substance, LabWithSubs, Lab, Inventory, Rectangle, SubstanceProps, ObjectType, SubstanceNames, GetSubstanceObj}
+export type {Substance, LabWithSubs, Lab, GetSubstancesInLab, Inventory, Rectangle, SubstanceProps, ObjectType, SubstanceNames, GetSubstanceObj}
 
 export {DEFAULT_SIZE, substanceImages, emptyBottleImages};
