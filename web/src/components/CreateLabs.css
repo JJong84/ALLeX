@@ -1,3 +1,33 @@
+.create-lab-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  
+  .lab-title {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .bottom-button-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .create-lab-button {
+    padding: 10px 20px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .create-lab-button:hover {
+    background-color: #004a99;
+  }
+
 /* Sidebar styling */
 .sidebar {
     position: fixed;
