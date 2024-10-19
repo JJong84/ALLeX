@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LabList from './components/LabList';
+import LabInventory from './components/LabInventory';
+import CreateLab from './components/CreateLab';
 
 function App() {
+  const [labId, setLabId] = useState(null);
+
+  const handleEnterLab = (id) => {
+    setLabId(id);
+    window.location.href = `/labs/${id}`;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LabList onEnterLab={handleEnterLab} />} />
+        <Route path="/labs/:id" element={<LabInventory labId={labId} />} />
+        <Route path="/create-lab" element={<CreateLab />} />
+      </Routes>
+    </Router>
   );
 }
 
