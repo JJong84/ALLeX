@@ -13,7 +13,7 @@ function getCookie(name: string) {
 
 // Create axios instance with custom configuration
 const client = axios.create({
-  baseURL: 'https://b1c6-210-218-207-6.ngrok-free.app/',  // Set this to your FastAPI server URL
+  baseURL: 'http://13.209.82.235:8000/',  // Set this to your FastAPI server URL
   withCredentials: true,  // Include credentials in requests (useful for cookies or sessions)
   headers: {
     'Access-Control-Allow-Credentials': true,  // Allow credentials to be passed in cross-origin requests
@@ -36,9 +36,8 @@ const addExperiment = async () => {
 
 const getSubstancesInLab = async (labId: number): Promise<AxiosResponse<Inventory>> => client.get(`/labs/${labId}/substances`)
 
-const getSubstances = async () => {
-
-}
+// API function to get all available substances from the backend
+const getSubstances = async (): Promise<AxiosResponse<GetSubstanceObj[]>> => client.get('/substances/');
 
 // Export the axios instance for use in API requests
 export {getLabs, getExperiments, addExperiment, getSubstances, getSubstancesInLab, createLab};

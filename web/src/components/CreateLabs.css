@@ -1,0 +1,118 @@
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden off-screen */
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    left: 0; /* Slide in when open */
+  }
+  
+  .sidebar-header {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    flex: 1;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .tab.active {
+    background-color: #0066cc;
+  }
+  
+  .tab-content {
+    margin-top: 20px;
+  }
+  
+  /* Sidebar Toggle Button */
+  .sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    left: 0; /* Align with the sidebar */
+    margin-left: 250px; /* Start off to the right of the hidden sidebar */
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: margin-left 0.3s ease; /* Slide the button along with the sidebar */
+    z-index: 1100;
+  }
+  
+  .sidebar-toggle.open {
+    margin-left: 250px; /* Stay to the right of the open sidebar */
+  }
+  
+  /* Modal styling to center it on the page */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure modal appears on top */
+  }
+  
+  .modal-content {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    text-align: center;
+  }
+  
+  .modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0066cc;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover:enabled {
+    background-color: #004a99;
+  }
+  
