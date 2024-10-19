@@ -1,5 +1,5 @@
 import React from 'react';
-import './ImageWrapper.css';
+import dropper from '../../assets/dropper.png';
 
 interface ImageWrapperProps {
   width: string;
@@ -9,7 +9,7 @@ const Beaker: React.FC<ImageWrapperProps> = ({ width }) => {
   // TODO
   return (
     <div className="image-container" style={{ width }}>
-      <img src="./assets/dropper.png" alt="Bottle 2-2" />
+      <img src={dropper} alt="Bottle 2-2" />
     </div>
   );
 };
