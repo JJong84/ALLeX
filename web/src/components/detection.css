@@ -1,0 +1,15 @@
+#video-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* z-index를 낮게 설정하여 div가 그 위에 올 수 있게 함 */
+}
+
+#hand {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* video 위에 겹치도록 설정 */
+  pointer-events: none; /* div가 비디오 상호작용을 막지 않도록 */
+  background-color: rgba(255, 255, 255, 0.2); /* 예시: 반투명 흰색 배경 */
+}

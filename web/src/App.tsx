@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useState } from 'react';
 import LabList from './components/LabList';
 import LabInventory from './components/LabInventory';
-import CreateLab from './components/CreateLab';
+import CreateLab from './components/CreateLabs';
 
 function App() {
-  const [labId, setLabId] = useState(null);
+  const [labId, setLabId] = useState<number | null>(null);
 
-  const handleEnterLab = (id) => {
+  const handleEnterLab = (id: number) => {
     setLabId(id);
     window.location.href = `/labs/${id}`;
   };
@@ -16,11 +17,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LabList onEnterLab={handleEnterLab} />} />
-        <Route path="/labs/:id" element={<LabInventory labId={labId} />} />
+        <Route path="/labs/:id" element={<LabInventory />} />
         <Route path="/create-lab" element={<CreateLab />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
