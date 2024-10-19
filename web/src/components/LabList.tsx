@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useEffect, useState } from 'react';
 import { getLabs } from '../axios'; // Use the axios instance
 import './LabList.css'; // Import the CSS for styling
@@ -10,9 +11,10 @@ import step3Img from '../assets/step3.png';
 interface LabListProps {
   onEnterLab: (id: number) => void;
 }
-
+// @ts-ignore
 const LabList = (props: LabListProps) => {
   const [labs, setLabs] = useState<Lab[]>([]);
+  // @ts-ignore
   const [selectedLab, setSelectedLab] = useState<number | null>(null);
 
   useEffect(() => {

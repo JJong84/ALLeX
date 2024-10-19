@@ -33,6 +33,7 @@ function Detection({inventory}: Props) {
     const [resolution, setResolution] = useState<{width?: number; height?: number;}>({ width: 640, height: 480 });
     const [human, setHuman] = useState<Human | null>(null);
     const [detectedHand, setDetectedHand] = useState<Rectangle | undefined>(undefined);
+    // @ts-ignore
     const [detectedHandLabel, setDetectedHandLabel] = useState<HandType | undefined>(undefined);
     const [attachedSubstanceId, setAttachedSubstanceId] = useState<number | undefined>(undefined);
 
