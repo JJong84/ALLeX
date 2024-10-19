@@ -1,13 +1,13 @@
 import React from 'react';
 import { SubstanceProps } from '../types';
 
-const SubstanceComp = ({ entity_id, substance_name, x, y, case_type, movedX, movedY, isOverlapped }: SubstanceProps) => {
+const SubstanceComp = ({ entity_id, substance_name, x, y, case_type, movedX, movedY }: SubstanceProps) => {
   return (
     <div style={{
         position: 'absolute',
         zIndex: 3,
-        top: `${isOverlapped ? movedY : y}px`,
-        left: `${isOverlapped ? movedX : x}px`,
+        top: `${movedY}px`,
+        left: `${movedX}px`,
         width: "300px",
         height: "300px"
     }}>

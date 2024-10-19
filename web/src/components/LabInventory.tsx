@@ -4,6 +4,7 @@ import { Inventory } from '../types';
 import Detection from './Detection';
 import { useParams } from 'react-router-dom';
 import Substance from './Substance';
+import "./detection.css";
 
 const LabInventory = () => {
   const {id} = useParams();
@@ -22,9 +23,18 @@ const LabInventory = () => {
     }
   }, [id]);
 
+  const handleResetClick = () => {
+    //TODO
+  }
+
   return (
-    <div>
-      <h1>Lab Inventory</h1>
+    <div id="lab-inventory">
+      <header id="lab-inventory-header">
+        <button onClick={handleResetClick}>
+          초기화
+        </button>
+        {id}
+      </header>
       <Detection inventory={inventory} />
     </div>
   );

@@ -1,30 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
-import Human from '@vladmandic/human'
-import './detection.css'
+import Human, { Config, HandType } from '@vladmandic/human'
 import DetectedHand from './DetectedHand';
-import { Inventory, Rectangle, SubstanceProps } from '../types';
+import { Inventory, Rectangle } from '../types';
 import SubstanceComp from './Substance';
 import { isOverlapping } from '../helpers';
 
-const humanConfig = {
+const humanConfig: Partial<Config> = {
     async: false,
     debug: true,
     cacheSensitivity: 0,
     cacheModels: true,
     // modelBasePath: '@vladmandic/human-models/models/',
     modelBasePath: '/node_modules/@vladmandic/human/models/',
-    face: {
-        scale: 1.4,
-        detector: { enabled: true, maxDetected: 1, minSize: 256 },
-        mesh: { enabled: true },
-        iris: { enabled: false },
-        description: { enabled: false },
-        emotion: { enabled: true, crop: 0.15 },
-    },
     body: { enabled: false },
     hand: { enabled: true },
     object: { enabled: false },
-    gestures: { enabled: false },
+    filter: {
+        flip: true,
+        height: window.innerHeight,
+        width: window.innerWidth
+    },
 };
 
 interface Props {
@@ -32,22 +27,11 @@ interface Props {
 }
 
 function Detection({inventory}: Props) {
-    const [substances, setSubstances] = useState<SubstanceProps[]>([]);
     const videoRef = useRef<HTMLVideoElement>(null);
     const [human, setHuman] = useState<Human | null>(null);
     const [detectedHand, setDetectedHand] = useState<Rectangle | undefined>(undefined);
-
-    useEffect(() => {
-        if (inventory) {
-            const subs = inventory?.map((i) => ({
-                ...i,
-                isOverlapped: false,
-                movedX: i.x,
-                movedY: i.y,
-            }))
-            setSubstances(subs);
-        }
-    }, [inventory]);
+    const [detectedHandLabel, setDetectedHandLabel] = useState<HandType | undefined>(undefined);
+    const [attachedSubstanceId, setAttachedSubstanceId] = useState<number | undefined>(undefined);
 
     useEffect(() => {
         // 비디오 스트림 시작
@@ -78,14 +62,19 @@ function Detection({inventory}: Props) {
         if (result?.hand) {            
             const hand = result?.hand;
             if (!hand.length) {
+                // setDetectedHand(undefined);
+                // setDetectedHandLabel(undefined);
+                // setAttachedSubstanceId(undefined);
                 requestAnimationFrame(detectionLoop);
                 return;
             }
             const firstHand = hand[0];
             const [left, top, width, height] = firstHand.box;
             setDetectedHand({
-                height, width, top, left
+                height, width, top, left: left
             })
+            setDetectedHandLabel(firstHand.label);
+            console.log(firstHand.label);
         }
 
         requestAnimationFrame(detectionLoop); // start new frame immediately
@@ -95,52 +84,42 @@ function Detection({inventory}: Props) {
         requestAnimationFrame(detectionLoop);
     }, [human]);
 
-    useEffect(() => {
-        if (detectedHand) {
-            setSubstances((prevSubstances) =>
-                prevSubstances.map((s) => {
-                    const subRect: Rectangle = {
-                        top: s.y,
-                        left: s.x,
-                        width: 300,  // 예시로 가로/세로 값을 지정해 줍니다. 실제로는 substance의 크기에 맞게 설정.
-                        height: 300, // 필요한 경우 수정하세요.
-                    };
-                    
-                    // 손과 물질이 겹치는 경우
-                    if (isOverlapping(detectedHand, subRect)) {
-                        // 해당 항목의 isOverlapped를 true로 설정
-                        return { ...s, isOverlapped: true };
-                    }
-                    
-                    // 변경 사항이 없을 경우 기존 항목을 그대로 반환
-                    return s;
-                })
-            );
-        }
-    }, [detectedHand]);
+    const isFist = (label?: HandType): boolean => {
+        return label == "fist" || label == "point";
+    }
 
     useEffect(() => {
         if (detectedHand) {
-            setSubstances((prevSubstances) =>
-                prevSubstances.map((s) => {
-                    if (s.isOverlapped) {
-                        return { ...s, movedX: detectedHand?.left, movedY: detectedHand?.top };
-                    }                
-                    return s;
-                })
-            )
+            inventory?.map((s) => {
+                const subRect: Rectangle = {
+                    top: s.y,
+                    left: s.x,
+                    width: 300,  // 예시로 가로/세로 값을 지정해 줍니다. 실제로는 substance의 크기에 맞게 설정.
+                    height: 300, // 필요한 경우 수정하세요.
+                };
+                
+                // 손과 물체가 겹치고, 오므렸을 때
+                if (isOverlapping(detectedHand, subRect) && isFist(detectedHandLabel)) {
+                    setAttachedSubstanceId(s.entity_id);
+                }
+            })
         }
-    }, [detectedHand, substances]);
+    }, [detectedHand, detectedHandLabel, inventory]);
 
   return (
     <>
         <div id="video-container">
-            <video id="video-element" ref={videoRef} width="600" height="450" autoPlay muted></video>
+            <video id="video-element" ref={videoRef} width="100%" height="100%" autoPlay muted></video>
             {
                 detectedHand && <DetectedHand top={detectedHand.top} left={detectedHand.left} width={detectedHand.width} height={detectedHand.height} />
             }
-            {substances ? 
-                substances.map((sub) => <SubstanceComp key={sub.entity_id} {...sub} />)
+            {inventory ? 
+                inventory.map((sub) => {
+                    if (sub.entity_id === attachedSubstanceId) {
+                        return <SubstanceComp key={sub.entity_id} {...sub} movedX={detectedHand?.left} movedY={detectedHand?.top} />
+                    }
+                    return <SubstanceComp key={sub.entity_id} {...sub} movedX={sub.x} movedY={sub.y} />
+            })
             : (
                 <p>Loading inventory...</p>
             )}
