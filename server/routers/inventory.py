@@ -19,11 +19,16 @@ def get_substances_in_lab(lab_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"No substances found in lab with id {lab_id}")
 
     # Prepare the response
-    result = []
+    result = {
+        "lab_id": lab.id,
+        "lab_name": lab.lab_name,
+        "substances": []
+    }
+    
     for item in inventory:
         entity = item[0]
         substance = item[1]
-        result.append({
+        result["substances"].append({
             "entity_id": entity.entity_id,
             "substance_name": substance.substance_name,
             "x": entity.x,
