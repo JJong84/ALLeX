@@ -10,45 +10,10 @@ body {
     padding: 20px;
   }
   
-  .lab-title {
-    font-size: 36px;
-    text-align: center;
-  }
-  
-  .lab-description {
-    font-size: 16px;
-    text-align: center;
-    color: #b3b3b3;
-  }
-  
-  .new-lab-section {
-    margin-top: 40px;
-  }
-  
-  .new-lab-section h2 {
+  h2 {
     font-size: 24px;
-  }
-  
-  .lab-cards {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .lab-card {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    flex: 1;
-    text-align: center;
-  }
-  
-  .lab-card p {
     color: white;
-  }
-  
-  .lab-list-section {
-    margin-top: 40px;
+    margin-bottom: 20px;
   }
   
   .lab-list-item {
@@ -56,6 +21,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+    position: relative;
   }
   
   .lab-header {
@@ -63,6 +29,12 @@ body {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    color: white;
+  }
+  
+  .lab-header-actions {
+    display: flex;
+    align-items: center;
   }
   
   .enter-lab-btn {
@@ -72,10 +44,20 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    margin-right: 10px;
   }
   
   .enter-lab-btn:hover {
     background-color: #004a99;
+  }
+  
+  .toggle-arrow {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-arrow.open {
+    transform: rotate(180deg); /* Rotate arrow when open */
   }
   
   .lab-details {
@@ -83,19 +65,9 @@ body {
     color: #cccccc;
   }
   
-  .create-lab-btn {
-    background-color: #008cba;
-    color: white;
+  .lab-divider {
     border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 20px auto;
-    font-size: 16px;
-  }
-  
-  .create-lab-btn:hover {
-    background-color: #006a9b;
+    border-top: 1px solid #555;
+    margin-top: 10px;
   }
   
