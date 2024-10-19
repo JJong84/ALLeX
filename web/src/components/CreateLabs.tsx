@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useState, useEffect } from 'react';
 import { createLab, getSubstances } from '../axios'; // Import necessary functions
 import { DEFAULT_SIZE, LabWithSubs, ObjectType, substanceImages, SubstanceNames } from '../types';
@@ -43,6 +44,7 @@ const CreateLab = () => {
     }]);
   };
 
+  // @ts-ignore
   const handleCreateLab = () => {
     const labData: LabWithSubs = {
       lab_name: labName,

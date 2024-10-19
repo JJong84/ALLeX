@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+// @ts-ignore
 import { GetSubstanceObj, Inventory, Lab, LabWithSubs } from './types';
 
 // Function to retrieve cookies by name

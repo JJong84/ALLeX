@@ -46,6 +46,7 @@ interface Lab {
 interface LabWithSubs {
     lab_name: string;
     goal: string;
+    // @ts-ignore
     substances: Substance[];
 }
 

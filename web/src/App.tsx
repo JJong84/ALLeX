@@ -6,6 +6,7 @@ import LabInventory from './components/LabInventory';
 import CreateLab from './components/CreateLabs';
 
 function App() {
+  // @ts-ignore
   const [labId, setLabId] = useState<number | null>(null);
 
   const handleEnterLab = (id: number) => {

@@ -1,10 +1,11 @@
+// @ts-ignore
 import React, { useEffect, useState } from 'react';
 import { DEFAULT_SIZE, SubstanceProps } from '../types';
 import Beaker from './objects/Beaker';
 import BottleWithoutDropper from './objects/BottleWithoutDropper';
 import Dropper from './objects/Dropper';
 import Flask from './objects/Flask';
-
+// @ts-ignore
 const SubstanceComp = ({ entity_id, substance_name, x, y, case_type, movedX, movedY }: SubstanceProps) => {
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(300);

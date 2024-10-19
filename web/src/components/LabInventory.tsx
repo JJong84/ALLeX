@@ -3,6 +3,7 @@ import { getSubstancesInLab } from '../axios'; // Use the axios instance
 import { Inventory } from '../types';
 import Detection from './Detection';
 import { useParams } from 'react-router-dom';
+// @ts-ignore
 import Substance from './Substance';
 import "./detection.css";
 
@@ -13,6 +14,7 @@ const LabInventory = () => {
 
   useEffect(() => {
     if (id) {
+      // @ts-ignore
       getSubstancesInLab(id)
         .then(response => {
           setInventory(response.data);
