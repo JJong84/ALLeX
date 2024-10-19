@@ -1,24 +1,25 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
-from pydantic import BaseModel
-from typing import List
+from typing import List  # <-- Add this import for List
 import crud
+from schemas import LabCreate, LabResponse  # Importing the Pydantic models from schemas
 
 router = APIRouter()
 
-class SubstanceInput(BaseModel):
-    substance_name: str
-    count: int
-
-class LabCreate(BaseModel):
-    lab_name: str
-    substances: List[SubstanceInput]
-
-@router.get("/labs/")
+# Endpoint to get all labs
+@router.get("/labs/", response_model=List[LabResponse])  # Define the response model
 def get_labs(db: Session = Depends(get_db)):
-    return crud.get_labs(db)
+    labs = crud.get_labs(db)
+    if not labs:
+        raise HTTPException(status_code=404, detail="No labs found")
+    return labs
 
-@router.post("/labs/")
+# Endpoint to create a lab
+@router.post("/labs/", response_model=LabResponse)  # Define the response model
 def create_lab(lab_data: LabCreate, db: Session = Depends(get_db)):
-    return crud.create_lab(db, lab_data.lab_name, lab_data.substances)
+    # Call the CRUD function to handle lab creation
+    new_lab = crud.create_lab(db, lab_data.lab_name, lab_data.goal, lab_data.substances)
+    
+    # Return the newly created lab as a response
+    return new_lab
