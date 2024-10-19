@@ -28,8 +28,6 @@
 
 /* Main Image Section */
 .main-image-section {
-  margin-top: 20px;
-  margin-left: 0;
   width: 100%;
 }
 
@@ -55,17 +53,25 @@
   color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Left-align the text */
   justify-content: center;
-  text-align: center;
+  padding-left: 40px; /* Left padding for text */
+  margin-bottom: -30px; /* Slight space below the overlay */
+  padding-bottom: -1px; /* Slight padding below the text */
 }
 
 .text-overlay h1 {
-  font-size: 36px;
+  font-size: 32px;
+  text-align: left; /* Left-align the heading */
+  line-height: 1.1; /* Tighter line height for less space */
+  margin-bottom: 0px; /* Slightly reduced space below the heading */
 }
 
 .text-overlay p {
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.3; /* Reduced line spacing for paragraphs */
+  text-align: left; /* Left-align the paragraph */
+  margin-bottom: -10px; /* Slight space below paragraphs */
 }
 
 /* Lab List Section */
@@ -93,7 +99,20 @@
 .lab-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+}
+
+.lab-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left-align lab name and goal */
+}
+
+.lab-name {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 2px; /* Reduced space between name and goal */
 }
 
 .lab-goal {
@@ -101,6 +120,7 @@
   color: #999999;
 }
 
+/* Join Button */
 .enter-lab-btn {
   background-color: #294DFF;
   color: white;
@@ -118,17 +138,21 @@
 .create-lab-section {
   background-color: black;
   color: white;
-  padding: 40px;
-  text-align: center;
+  padding: 20px 150px; /* Reduced padding */
+  text-align: left; /* Left-align the entire section */
 }
 
 .create-lab-section h2 {
   font-size: 28px;
+  margin-bottom: 0px; /* Slight space below the heading */
+  text-align: left;
 }
 
 .create-lab-section p {
   font-size: 16px;
-  margin-bottom: 20px;
+  line-height: 1.3; /* Reduced line spacing */
+  margin-bottom: 30px; /* Reduced space below paragraph */
+  text-align: left;
 }
 
 .create-lab-btn {
@@ -138,7 +162,7 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin-bottom: 40px;
+  margin-top: -15px;
 }
 
 .create-lab-btn:hover {
@@ -148,34 +172,42 @@
 /* Steps Section */
 .steps-container {
   display: flex;
-  justify-content: space-evenly;
-  margin-top: 40px;
+  justify-content: center; /* Center the cards */
+  gap: 20px; /* Add space between steps */
+  margin-top: 30px; /* Reduced margin at the top */
 }
 
 .step-card {
-  width: 150px;
-  text-align: center;
+  width: 250px; /* Set card width */
+  background-color: #222222;
+  border-radius: 15px; /* Rounded square border */
+  padding: 15px; /* Reduced padding */
+  text-align: left;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the image in the card */
 }
 
 .step-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #666666;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  margin: 0 auto 10px;
+  width: 280px;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 5px;
+  margin-top: 5px; /* Reduced margin at the top */
 }
 
 .step-card h3 {
   font-size: 18px;
-  color: #cccccc;
+  margin-bottom: 2px; /* Reduced space below heading */
+  width: 100%;
+  text-align: left;
 }
 
 .step-card p {
   font-size: 14px;
   color: #999999;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 5px; /* Reduced space below paragraph */
 }
