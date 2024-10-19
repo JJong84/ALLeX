@@ -38,7 +38,7 @@ const addExperiment = async () => {
 const getSubstancesInLab = async (labId: number): Promise<AxiosResponse<Inventory>> => client.get(`/labs/${labId}/substances`)
 
 // API function to get all available substances from the backend
-const getSubstances = async (): Promise<AxiosResponse<GetSubstanceObj[]>> => client.get('/substances/');
+const getSubstances = async (): Promise<AxiosResponse<GetSubstanceObj>> => client.get('/substances/');
 
 // Export the axios instance for use in API requests
 export {getLabs, getExperiments, addExperiment, getSubstances, getSubstancesInLab, createLab};

@@ -27,6 +27,7 @@ const LabInventory = () => {
 
   const handleResetClick = () => {
     //TODO
+    setInventory((old) => old ? [...old] : undefined);
   }
 
   return (
