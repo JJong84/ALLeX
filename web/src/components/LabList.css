@@ -1,73 +1,181 @@
-/* LabList.css */
+/* General Page Styles */
+.lab-list-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-body {
-    background-color: #1c1c1c;
-    color: white;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .lab-list-page {
-    padding: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    color: white;
-    margin-bottom: 20px;
-  }
-  
-  .lab-list-item {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  .lab-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-  }
-  
-  .lab-header-actions {
-    display: flex;
-    align-items: center;
-  }
-  
-  .enter-lab-btn {
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  
-  .enter-lab-btn:hover {
-    background-color: #004a99;
-  }
-  
-  .toggle-arrow {
-    font-size: 16px;
-    transition: transform 0.3s ease;
-  }
-  
-  .toggle-arrow.open {
-    transform: rotate(180deg); /* Rotate arrow when open */
-  }
-  
-  .lab-details {
-    margin-top: 10px;
-    color: #cccccc;
-  }
-  
-  .lab-divider {
-    border: none;
-    border-top: 1px solid #555;
-    margin-top: 10px;
-  }
-  
+/* Top Bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1000;
+}
+
+.allex-logo {
+  color: #294DFF;
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+/* Main Image Section */
+.main-image-section {
+  margin-top: 20px;
+  margin-left: 0;
+  width: 100%;
+}
+
+.main-image {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(transparent, #294DFF);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.text-overlay h1 {
+  font-size: 36px;
+}
+
+.text-overlay p {
+  font-size: 18px;
+}
+
+/* Lab List Section */
+.lab-list-section {
+  background-color: #333333;
+  padding: 20px;
+}
+
+.lab-list-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.lab-list-item {
+  background-color: #444444;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lab-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.lab-goal {
+  font-size: 14px;
+  color: #999999;
+}
+
+.enter-lab-btn {
+  background-color: #294DFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enter-lab-btn:hover {
+  background-color: #002ECC;
+}
+
+/* Create Lab Section */
+.create-lab-section {
+  background-color: black;
+  color: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.create-lab-section h2 {
+  font-size: 28px;
+}
+
+.create-lab-section p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.create-lab-btn {
+  background-color: #294DFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+.create-lab-btn:hover {
+  background-color: #002ECC;
+}
+
+/* Steps Section */
+.steps-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.step-card {
+  width: 150px;
+  text-align: center;
+}
+
+.step-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #666666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  margin: 0 auto 10px;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  color: #cccccc;
+}
+
+.step-card p {
+  font-size: 14px;
+  color: #999999;
+}
