@@ -19,14 +19,60 @@
 }
 
 #lab-inventory-header {
+  max-width: 508px;
+  height: 64px;
+  border-radius: 32px;
   position: absolute;
   z-index: 10;
   top: 0;
   margin-top: 16px;
   display: flex;
+  justify-content: space-between; /* 양쪽 버튼이 좌우에 위치하고 가운데 내용이 중앙에 오도록 */
+  align-items: center;
   background-color: black;
   width: calc(100% - 32px);
-  left: 16px;
+  left: calc(100% - 32px);
+  padding: 0 16px;
+  text-align: center;
+
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.reset-button {
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #ff3434;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+}
+
+.reset-button:hover {
+  background-color: #f16161;
+}
+
+.close-button {
+  width: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 8px;
+  background-color: #294DFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+}
+
+.header-text {
+  color: white;
+  flex-grow: 1; /* 가운데 텍스트가 가로로 공간을 차지하게 만듦 */
+  font-size: 16px;
+  text-align: center;
 }
 
 .image-container {

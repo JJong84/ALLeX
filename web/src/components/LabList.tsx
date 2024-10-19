@@ -9,10 +9,11 @@ import step2Img from '../assets/step2.png';
 import step3Img from '../assets/step3.png';
 
 interface LabListProps {
-  onEnterLab: (id: number) => void;
+  onEnterLab: (id: number, name: string) => void;
 }
 // @ts-ignore
 const LabList = (props: LabListProps) => {
+  const { onEnterLab } = props;
   const [labs, setLabs] = useState<Lab[]>([]);
   // @ts-ignore
   const [selectedLab, setSelectedLab] = useState<number | null>(null);
@@ -27,7 +28,8 @@ const LabList = (props: LabListProps) => {
       });
   }, []);
 
-  const enterLab = (labId: number) => {
+  const enterLab = (labId: number, labName: string) => {
+    onEnterLab(labId, labName);
     window.location.href = `/labs/${labId}`;  // Redirect to the lab page with the correct labId
   };
 
@@ -64,7 +66,7 @@ const LabList = (props: LabListProps) => {
                   <strong className="lab-name">{lab.lab_name}</strong>
                   <span className="lab-goal">{lab.goal || 'No goal specified'}</span>
                 </div>
-                <button className="enter-lab-btn" onClick={() => enterLab(lab.id)}>참여하기</button>
+                <button className="enter-lab-btn" onClick={() => enterLab(lab.id, lab.lab_name)}>참여하기</button>
               </div>
             </div>
           ))}
@@ -75,7 +77,7 @@ const LabList = (props: LabListProps) => {
       <section className="create-lab-section">
         <h2>새로운 실험 생성하기</h2>
         <p>선생님이세요? ALLeX를 통해 손쉽게 실험을 준비하세요.</p>
-        <button className="create-lab-btn" onClick={createLab}>생성하기</button>
+        <button className="enter-lab-btn" onClick={createLab}>생성하기</button>
 
         {/* Three horizontally placed images with steps */}
         <div className="steps-container">

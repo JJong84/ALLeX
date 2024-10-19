@@ -9,15 +9,16 @@ import "./detection.css";
 
 const LabInventory = () => {
   const {id} = useParams();
-  console.log(id);
   const [inventory, setInventory] = useState<Inventory | undefined>(undefined);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (id) {
       // @ts-ignore
       getSubstancesInLab(id)
         .then(response => {
-          setInventory(response.data);
+          setInventory(response.data.substances);
+          setName(response.data.lab_name);
         })
         .catch(error => {
           console.error('Error fetching lab inventory:', error);
@@ -30,13 +31,20 @@ const LabInventory = () => {
     setInventory((old) => old ? [...old] : undefined);
   }
 
+  const handleCloseClick = () => {
+
+  }
+
   return (
     <div id="lab-inventory">
       <header id="lab-inventory-header">
-        <button onClick={handleResetClick}>
+        <button className="reset-button" onClick={handleResetClick}>
           초기화
         </button>
-        {id}
+        <p className="header-text">{name}</p>
+        <button className="close-button" onClick={handleCloseClick}>
+          X
+        </button>
       </header>
       <Detection inventory={inventory} />
     </div>

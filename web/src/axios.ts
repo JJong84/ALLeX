@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 // @ts-ignore
-import { GetSubstanceObj, Inventory, Lab, LabWithSubs } from './types';
+import { GetSubstanceObj, GetSubstancesInLab, Lab, LabWithSubs } from './types';
 
 // Function to retrieve cookies by name
 function getCookie(name: string) {
@@ -35,7 +35,7 @@ const addExperiment = async () => {
 
 }
 
-const getSubstancesInLab = async (labId: number): Promise<AxiosResponse<Inventory>> => client.get(`/labs/${labId}/substances`)
+const getSubstancesInLab = async (labId: number): Promise<AxiosResponse<GetSubstancesInLab>> => client.get(`/labs/${labId}/substances`)
 
 // API function to get all available substances from the backend
 const getSubstances = async (): Promise<AxiosResponse<GetSubstanceObj>> => client.get('/substances/');
