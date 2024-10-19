@@ -1,5 +1,5 @@
 import React from 'react';
-import './ImageWrapper.css';
+import flask from '../../assets/flask.png'
 
 interface ImageWrapperProps {
   width: string;
@@ -8,7 +8,7 @@ interface ImageWrapperProps {
 const Flask: React.FC<ImageWrapperProps> = ({ width }) => {
   return (
     <div className="image-container" style={{ width }}>
-      <img src="./assets/flask.png" alt="Bottle 2-2" />
+      <img src={flask} alt="Bottle 2-2" />
     </div>
   );
 };

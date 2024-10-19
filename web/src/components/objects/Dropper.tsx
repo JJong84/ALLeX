@@ -1,5 +1,5 @@
 import React from 'react';
-import './ImageWrapper.css';
+import dropper from '../../assets/dropper.png';
 
 interface ImageWrapperProps {
   width: string;
@@ -8,7 +8,7 @@ interface ImageWrapperProps {
 const Dropper: React.FC<ImageWrapperProps> = ({ width }) => {
   return (
     <div className="image-container" style={{ width }}>
-      <img src="./assets/dropper.png" alt="Dropper" />
+      <img src={dropper} alt="Dropper" />
     </div>
   );
 };
