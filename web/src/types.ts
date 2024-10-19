@@ -3,13 +3,12 @@ interface Substance {
     x: number; // original
     y: number; // original
     case_type: string;
-    movedX: number;
-    movedY: number;
 }
 
 interface SubstanceProps extends Substance {
     entity_id: number;
-    isOverlapped: boolean;
+    movedX?: number;
+    movedY?: number;
 }
 
 interface Lab {

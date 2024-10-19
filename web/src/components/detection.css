@@ -2,7 +2,11 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
   z-index: 1; /* z-index를 낮게 설정하여 div가 그 위에 올 수 있게 함 */
+  transform: scaleX(-1);
 }
 
 #hand {
@@ -12,4 +16,47 @@
   z-index: 2; /* video 위에 겹치도록 설정 */
   pointer-events: none; /* div가 비디오 상호작용을 막지 않도록 */
   background-color: rgba(255, 255, 255, 0.2); /* 예시: 반투명 흰색 배경 */
+}
+
+#lab-inventory-header {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  margin-top: 16px;
+  display: flex;
+  background-color: black;
+  width: calc(100% - 32px);
+  left: 16px;
+}
+
+.image-container {
+  position: absolute;
+  overflow: hidden; /* Ensures no overflow */
+  background-color: transparent; /* The div is transparent */
+}
+
+.image-container img {
+  width: 100%; /* 100% width of the container */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
+  display: block;
+}
+
+#bottle {
+  z-index: 4;
+  position: absolute;
+}
+
+#dropper {
+  z-index: 6;
+  position: absolute;
+}
+
+#beaker {
+  z-index: 4;
+  position: absolute;
+}
+
+#flask {
+  z-index: 4;
+  position: absolute;
 }
