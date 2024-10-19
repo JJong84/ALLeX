@@ -1,51 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { createLab, getSubstances } from '../axios'; // Import necessary functions
-import { LabWithSubs } from '../types';
+import { DEFAULT_SIZE, LabWithSubs, ObjectType, substanceImages, SubstanceNames } from '../types';
+import './CreateLabs.css'; // Import CSS for styling
 import flaskImg from '../assets/flask.png';
 import bottleImg from '../assets/bottle.png';
-import './CreateLabs.css'; // Import CSS for styling
-import flaskBTBImg from '../assets/Flask-BTB.png';
-import flaskBTBH2OImg from '../assets/Flask-BTB+H2O.png';
-import flaskBTBHCLImg from '../assets/Flask-BTB+HCL.png';
-import flaskBTBNH3Img from '../assets/Flask-BTB+NH3.png';
-import flaskMethylOrangeImg from '../assets/Flask-Methyl_orange.png';
-import flaskMethylOrangeH2OImg from '../assets/Flask-Methyl_orange+H2O.png';
-import flaskMethylOrangeHCLImg from '../assets/Flask-Methyl_orange+HCL.png';
-import flaskMethylOrangeNH3Img from '../assets/Flask-Methyl_orange+NH3.png';
-import flaskPhenolphthaleinImg from '../assets/Flask-Phenolphthalein.png';
-import flaskPhenolphthaleinH2OImg from '../assets/Flask-Phenolphthalein+H2O.png';
-import flaskPhenolphthaleinHCLImg from '../assets/Flask-Phenolphthalein+HCL.png';
-import flaskPhenolphthaleinNH3Img from '../assets/Flask-Phenolphthalein+NH3.png';
-import h2oImg from '../assets/H2O.png';
-import hclImg from '../assets/HCL.png';
-import nh3Img from '../assets/NH3.png';
-
-// Hardcoded dictionary mapping substances to images
-const substanceImages: { [key: string]: string } = {
-  'BTB': flaskBTBImg,
-  'BTB+물': flaskBTBH2OImg,
-  'BTB+염산': flaskBTBHCLImg,
-  'BTB+암모니아': flaskBTBNH3Img,
-  '메틸 오렌지': flaskMethylOrangeImg,
-  '메틸 오렌지+물': flaskMethylOrangeH2OImg,
-  '메틸 오렌지+염산': flaskMethylOrangeHCLImg,
-  '메틸 오렌지+암모니아': flaskMethylOrangeNH3Img,
-  '페놀프탈레인': flaskPhenolphthaleinImg,
-  '페놀프탈레인+물': flaskPhenolphthaleinH2OImg,
-  '페놀프탈레인+염산': flaskPhenolphthaleinHCLImg,
-  '페놀프탈레인+암모니아': flaskPhenolphthaleinNH3Img,
-  '물': h2oImg,
-  '염산': hclImg,
-  '암모니아': nh3Img,
-  // 추가 용액들 필요시 추가
-};
 
 interface Substance {
   substance_id: number;
-  substance_name: string;
+  substance_name: SubstanceNames | "";
   x: number;
   y: number;
-  case_type: string;
+  case_type: ObjectType;
   image: string; // To track which image is currently being displayed
 }
 
@@ -53,7 +18,7 @@ const CreateLab = () => {
   const [labName, setLabName] = useState(''); // Lab name
   const [goal, setGoal] = useState('');       // Lab goal
   const [substances, setSubstances] = useState<Substance[]>([]); // Substances
-  const [materials, setMaterials] = useState<string[]>([]); // Materials fetched from backend
+  const [materials, setMaterials] = useState<SubstanceNames[]>([]); // Materials fetched from backend
   const [showModal, setShowModal] = useState(true); // Modal state
   const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
   const [activeTab, setActiveTab] = useState('Tools'); // Active tab in sidebar
@@ -62,16 +27,15 @@ const CreateLab = () => {
   const availableTools = ['플라스크', '시약병']; // Fixed tools
 
   // Function to drop tools or materials
-  const handleDrop = (item: string, itemType: string) => {
+  const handleDrop = (itemType: ObjectType) => {
     const imageWidth = 150;  // Fixed image width
     const imageHeight = 150; // Fixed image height
-
-    const newX = (window.innerWidth / 2) - (imageWidth / 2) - 0.9 * (window.innerWidth / 2) ; // Center the image horizontally
-    const newY = (window.innerHeight / 2) - (imageHeight / 2); // Center the image vertically
+    const newX = Math.round((window.innerWidth / 2) - (imageWidth / 2)) ; // Center the image horizontally
+    const newY = Math.round((window.innerHeight / 2) - (imageHeight / 2)); // Center the image vertically
 
     setSubstances([...substances, {
       substance_id: substances.length + 1,
-      substance_name: item,
+      substance_name: "",
       x: newX,
       y: newY,
       case_type: itemType,
@@ -83,7 +47,7 @@ const CreateLab = () => {
     const labData: LabWithSubs = {
       lab_name: labName,
       goal: goal,
-      substances: substances,
+      substances,
     };
 
     createLab(labData)
@@ -101,7 +65,7 @@ const CreateLab = () => {
     if (activeTab === 'Materials') {
       getSubstances()
         .then(response => {
-          setMaterials(response.data.map((material: { substance_name: string }) => material.substance_name)); // Just get names
+          setMaterials(response.data.map((material) => material.substance_name)); // Just get names
         })
         .catch(error => {
           console.error('Error fetching materials:', error);
@@ -119,14 +83,15 @@ const CreateLab = () => {
   };
 
   // Function to assign substance to selected tool
-  const handleAssignSubstance = (substanceName: string) => {
+  const handleAssignSubstance = (substanceName: SubstanceNames) => {
     if (selectedToolId !== null) {
       const updatedSubstances = substances.map(substance => {
         if (substance.substance_id === selectedToolId) {
           // If the selected tool matches, replace the image with the substance image
           return {
             ...substance,
-            image: substanceImages[substanceName] || substance.image, // Replace image if available
+            image: substanceImages[substanceName] || substance.image, 
+            substance_name: substanceName
           };
         }
         return substance;
@@ -163,7 +128,7 @@ const CreateLab = () => {
             Materials
           </button>
         </div>
-
+        
         {/* Tab content */}
         <div className="tab-content">
           {activeTab === 'Tools' ? (
@@ -172,7 +137,7 @@ const CreateLab = () => {
               {availableTools.map((tool, index) => (
                 <div
                   key={index}
-                  onClick={() => handleDrop(tool, tool === '플라스크' ? 'flask' : 'bottle')}
+                  onClick={() => handleDrop(tool === '플라스크' ? 'flask' : 'bottle')}
                   style={{
                     cursor: 'pointer',
                     padding: '5px',
@@ -213,34 +178,36 @@ const CreateLab = () => {
         &#9776;
       </button>
 
-      {/* Render substances as draggable images */}
-      {substances.map((substance, index) => (
-        <img
-          key={substance.substance_id}
-          src={substance.image}
-          alt={substance.substance_name}
-          style={{
-            position: 'absolute',
-            left: `${substance.x}px`,
-            top: `${substance.y}px`,
-            cursor: 'move',
-            border: substance.substance_id === selectedToolId ? '3px solid red' : 'none', // Add or remove border if selected
-            width: 'auto', // Fixed size to ensure it remains consistent
-            height: '300px',
-          }}
-          draggable
-          onClick={() => handleToolSelect(substance.substance_id)} // Handle tool selection and deselection
-          onDragEnd={(e) => {
-            const updatedSubstances = [...substances];
-            updatedSubstances[index] = {
-              ...updatedSubstances[index],
-              x: e.clientX - (window.innerWidth / 2) , // Adjust position to center on cursor (based on fixed width)
-              y: e.clientY - 0.15 * (window.innerWidth / 2) , // Adjust position to center on cursor (based on fixed height)
-            };
-            setSubstances(updatedSubstances); // Update coordinates after dragging
-          }}
-        />
-      ))}
+      <div className="substance-container">
+        {/* Render substances as draggable images */}
+        {substances.map((substance, index) => (
+          <img
+            key={substance.substance_id}
+            src={substance.image}
+            alt={substance.substance_name}
+            style={{
+              position: 'absolute',
+              left: `${substance.x}px`,
+              top: `${substance.y}px`,
+              cursor: 'move',
+              border: substance.substance_id === selectedToolId ? '3px solid red' : 'none', // Add or remove border if selected
+              width: 'auto', // Fixed size to ensure it remains consistent
+              height: '300px',
+            }}
+            draggable
+            onClick={() => handleToolSelect(substance.substance_id)} // Handle tool selection and deselection
+            onDragEnd={(e) => {
+              const updatedSubstances = [...substances];
+              updatedSubstances[index] = {
+                ...updatedSubstances[index],
+                x: Math.round(e.clientX  - DEFAULT_SIZE[substance.case_type].width / 2) , // Adjust position to center on cursor (based on fixed width)
+                y: Math.round(e.clientY - DEFAULT_SIZE[substance.case_type].height / 2), // Adjust position to center on cursor (based on fixed height)
+              };
+              setSubstances(updatedSubstances); // Update coordinates after dragging
+            }}
+          />
+        ))}
+      </div>
 
       {/* Modal for lab setup */}
       {showModal && (

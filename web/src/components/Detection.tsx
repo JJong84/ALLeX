@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Human, { Config, HandType } from '@vladmandic/human'
 import DetectedHand from './DetectedHand';
-import { DEFAULT_SIZE, Inventory, ObjectType, Rectangle, SubstanceProps } from '../types';
+import { DEFAULT_SIZE, Inventory, ObjectType, Rectangle, SubstanceNames, SubstanceProps } from '../types';
 import SubstanceComp from './Substance';
-import { isOverlapping } from '../helpers';
+import { addSubstance, isOverlapping } from '../helpers';
 
 const humanConfig: Partial<Config> = {
     async: false,
@@ -46,26 +46,31 @@ function Detection({inventory}: Props) {
                     const target: ObjectType = "dropper";
                     list.push({
                         ...s,
+                        entity_id: s.entity_id + 100, // TODO for unique key
                         draggable: isDraggable(target),
                         case_type: target,
-                        movedX: s.x,
-                        movedY: s.y
+                        movedX: s.x + DEFAULT_SIZE[target].width / 2,
+                        movedY: s.y + DEFAULT_SIZE[target].height / 2,
+                        currentSubstanceName: s.substance_name
                     })
                     list.push({
                         ...s,
                         draggable: isDraggable(s.case_type),
-                        movedX: s.x,
-                        movedY: s.y
+                        movedX: s.x + DEFAULT_SIZE[s.case_type].width / 2,
+                        movedY: s.y + DEFAULT_SIZE[s.case_type].height / 2,
+                        currentSubstanceName: s.substance_name
                     })
                 } else {
                     list.push({
                         ...s,
                         draggable: isDraggable(s.case_type),
-                        movedX: s.x,
-                        movedY: s.y
+                        movedX: s.x + DEFAULT_SIZE[s.case_type].width / 2,
+                        movedY: s.y + DEFAULT_SIZE[s.case_type].height / 2,
+                        currentSubstanceName: s.substance_name
                     })
                 }
             });
+            console.log(list);
             setSubstances(list);
         }
     }, [inventory]);
@@ -117,7 +122,7 @@ function Detection({inventory}: Props) {
             }
             const firstHand = hand[0];
             const [left, top, width, height] = firstHand.box;
-            console.log(resolution);
+            // console.log(resolution);
             if (!resolution.width || !resolution.height) {
                 requestAnimationFrame(detectionLoop);
                 return;
@@ -161,8 +166,61 @@ function Detection({inventory}: Props) {
         requestAnimationFrame(detectionLoop);
     }, [human]);
 
+    const attachedSubstance = useMemo(() => {
+        return substances.find((s) => s.entity_id === attachedSubstanceId)
+    }, [substances, attachedSubstanceId]);
+
+    const addDropperToFlask = useCallback(() => {
+        console.log("add dropper to flask");
+        // TODO 두 개가 애매하게 놓여있을 때 이상하게 보여질 수 있음
+        if (!attachedSubstance) {
+            return;
+        }
+
+        const aRect = {
+            top: attachedSubstance.movedY,
+            left: attachedSubstance.movedX,
+            ...DEFAULT_SIZE[attachedSubstance.case_type]
+        }
+
+        let newSubstanceId: number | undefined = undefined;
+        let newSubstanceName: SubstanceNames | undefined = undefined;
+
+        const newList = substances.map((s) => {
+            if (newSubstanceId) {
+                return s;
+            }
+            if (s.case_type !== "flask") {
+                return s;
+            }
+            const sRect = {
+                top: s.movedY,
+                left: s.movedX,
+                ...DEFAULT_SIZE[s.case_type]
+            }
+
+            if (isOverlapping(aRect, sRect)) {
+                console.log('overlapped');
+                newSubstanceName = addSubstance(attachedSubstance.currentSubstanceName, s.currentSubstanceName);
+                newSubstanceId = s.entity_id;
+                console.log(newSubstanceName);
+                return {...s, substance_name: newSubstanceName};
+            } else {
+                console.log('not overlapped');
+                return s;
+            }
+        });
+
+        setSubstances(newList);
+    }, [attachedSubstance, substances]);
+
     useEffect(() => {
         if (!isFistState) {
+            if (attachedSubstanceId) {
+                console.log(`Release ${attachedSubstanceId}`);
+                // 플라스크에 닿아있다면, 플라스크의 current물질 변경
+                addDropperToFlask();
+            }
             setDetectedHand(undefined);
             setDetectedHandLabel(undefined);
             setAttachedSubstanceId(undefined);
@@ -185,7 +243,7 @@ function Detection({inventory}: Props) {
                 }
             })
         }
-    }, [detectedHand, isFistState, substances]);
+    }, [detectedHand, isFistState, substances, addDropperToFlask, attachedSubstanceId]);
 
     useEffect(() => {
         if (attachedSubstanceId && detectedHand) {
@@ -218,12 +276,6 @@ function Detection({inventory}: Props) {
                 substances.map((sub) => {
                     if (sub.entity_id === attachedSubstanceId && detectedHand) {
                         return <SubstanceComp key={sub.entity_id} {...sub} />
-                    }
-                    else if (sub.case_type == "bottle") {
-                        return (<>
-                            <SubstanceComp key={sub.entity_id} {...sub} case_type='dropper' />
-                            <SubstanceComp key={sub.entity_id+100} {...sub} case_type='bottle' />
-                        </>)
                     }
                     return <SubstanceComp key={sub.entity_id} {...sub} />
             })

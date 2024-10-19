@@ -19,21 +19,21 @@ const SubstanceComp = ({ entity_id, substance_name, x, y, case_type, movedX, mov
       case 'beaker':
         return <Beaker width={`${width}px`} />
       case 'bottle':
-        return <BottleWithoutDropper width={`${width}px`} />
+        return <BottleWithoutDropper substanceName={substance_name} width={`${width}px`} />
       case 'dropper':
-        return <Dropper width={`${width}px`} />
+        return <Dropper substanceName={substance_name} width={`${width}px`} />
       case 'flask':
-        return <Flask width={`${width}px`} />
+        return <Flask substanceName={substance_name} width={`${width}px`} />
       default:
-        return <Flask width={`${width}px`} />
+        return <Flask substanceName={substance_name} width={`${width}px`} />
     }
   }
 
   return (
     <div style={{
         position: 'absolute',
-        zIndex: 3,
-        top: `${movedY - height / 2}px`,
+        zIndex: case_type === "dropper" ? 3 : 4,
+        top: `${movedY - height / 2 - (case_type === "dropper" ? 60 : 0)}px`,
         left: `${movedX - width / 2}px`,
         width: `${width}px`,
         height: `${height}px`

@@ -145,4 +145,13 @@
   button:hover:enabled {
     background-color: #004a99;
   }
+
+  .substance-container {
+    position: fixed;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 1000vh;
+  }
   
