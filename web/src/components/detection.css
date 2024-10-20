@@ -56,16 +56,16 @@
 }
 
 .close-button {
+  margin-right: 8px;
   width: 40px;
   max-width: 40px;
-  max-height: 40px;
+  min-height: 40px;
   border-radius: 8px;
   background-color: #294DFF;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 20px;
 }
 
 .header-text {

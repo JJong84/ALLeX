@@ -270,7 +270,7 @@ function Detection({inventory}: Props) {
         <div id="video-container">
             <video id="video-element" ref={videoRef} width="100%" height="100%" autoPlay muted></video>
             {
-                detectedHand && <DetectedHand top={detectedHand.top} left={detectedHand.left} width={detectedHand.width} height={detectedHand.height} />
+                detectedHand && <DetectedHand isDebug top={detectedHand.top} left={detectedHand.left} width={detectedHand.width} height={detectedHand.height} />
             }
             {substances ? 
                 substances.map((sub) => {

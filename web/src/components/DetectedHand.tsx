@@ -4,12 +4,13 @@ interface DetectedHandProps {
     top: number,
     left: number,
     width: number,
-    height: number
+    height: number,
+    isDebug?: boolean;
 }
 
-function DetectedHand({top, left, width, height}: DetectedHandProps) {
+function DetectedHand({top, left, width, height, isDebug}: DetectedHandProps) {
   return (
-    <div id="hand" style={{
+    <div id={isDebug ? "hand" : ""} style={{
         top: `${top}px`,
         left: `${left}px`,
         width: `${width}px`,

@@ -4,8 +4,6 @@ import LabList from './components/LabList';
 import LabInventory from './components/LabInventory';
 import CreateLab from './components/CreateLabs';
 
-const BASE_NAME = "https://jjong84.github.io/Hackathon"
-
 function App() {
   const handleEnterLab = (id: number, name: string) => {
     console.log(id, name);
@@ -13,7 +11,7 @@ function App() {
   };
 
   return (
-    <Router basename={BASE_NAME}>
+    <Router>
       <Routes>
         <Route path="/" element={<LabList onEnterLab={handleEnterLab} />} />
         <Route path="/labs/:id" element={<LabInventory />} />

@@ -5,6 +5,8 @@ import { DEFAULT_SIZE, LabWithSubs, ObjectType, substanceImages, SubstanceNames 
 import './CreateLabs.css'; // Import CSS for styling
 import flaskImg from '../assets/flask.png';
 import bottleImg from '../assets/bottle.png';
+import icon from '../assets/Group 7.png';
+import icon2 from '../assets/Group 12.png';
 
 interface Substance {
   substance_id: number;
@@ -128,7 +130,7 @@ const CreateLab = () => {
           {
             sidebarOpen &&
               <button className={`sidebar-header-toggle ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(!sidebarOpen)}>
-                &#9776;
+                <img src={icon} />
                 </button>
           }
         </div>
@@ -179,7 +181,7 @@ const CreateLab = () => {
       {
         !sidebarOpen &&
           <button className={`sidebar-toggle ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(!sidebarOpen)}>
-          &#9776;
+          <img src={icon2} />
         </button>
       }
       <div className="substance-container">

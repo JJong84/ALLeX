@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 // @ts-ignore
 import Substance from './Substance';
 import "./detection.css";
+import CloseIcon from '../assets/Group 28.png';
 
 const LabInventory = () => {
   const {id} = useParams();
@@ -32,7 +33,7 @@ const LabInventory = () => {
   }
 
   const handleCloseClick = () => {
-
+    window.location.href = `/`;
   }
 
   return (
@@ -43,7 +44,7 @@ const LabInventory = () => {
         </button>
         <p className="header-text">{name}</p>
         <button className="close-button" onClick={handleCloseClick}>
-          X
+          <img src={CloseIcon} />
         </button>
       </header>
       <Detection inventory={inventory} />
