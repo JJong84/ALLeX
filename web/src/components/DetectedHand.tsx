@@ -5,12 +5,13 @@ interface DetectedHandProps {
     left: number,
     width: number,
     height: number,
+    isFistState: boolean;
     isDebug?: boolean;
 }
 
-function DetectedHand({top, left, width, height, isDebug}: DetectedHandProps) {
+function DetectedHand({top, left, width, height, isFistState}: DetectedHandProps) {
   return (
-    <div id={isDebug ? "hand" : ""} style={{
+    <div id={isFistState ? "fist" : "hand"} style={{
         top: `${top}px`,
         left: `${left}px`,
         width: `${width}px`,

@@ -222,6 +222,15 @@ const CreateLab = () => {
               };
               setSubstances(updatedSubstances); // Update coordinates after dragging
             }}
+            // onDrag={(e) => {
+            //   const updatedSubstances = [...substances];
+            //   updatedSubstances[index] = {
+            //     ...updatedSubstances[index],
+            //     x: Math.round(e.clientX - DEFAULT_SIZE[substance.case_type].width / 2),
+            //     y: Math.round(e.clientY - DEFAULT_SIZE[substance.case_type].height / 2),
+            //   };
+            //   setSubstances(updatedSubstances); 
+            // }}
           />
         ))}
       </div>

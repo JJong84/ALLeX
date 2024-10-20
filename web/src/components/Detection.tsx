@@ -243,7 +243,7 @@ function Detection({inventory}: Props) {
                 // 플라스크에 닿아있다면, 플라스크의 current물질 변경
                 addDropperToFlask();
             }
-            setDetectedHand(undefined);
+            // setDetectedHand(undefined);
             setAttachedSubstanceId(undefined);
         }
         else if (detectedHand && isFistState) {
@@ -291,7 +291,7 @@ function Detection({inventory}: Props) {
         <div id="video-container">
             <video id="video-element" ref={videoRef} width="100%" height="100%" autoPlay muted></video>
             {
-                detectedHand && <DetectedHand isDebug top={detectedHand.top} left={detectedHand.left} width={detectedHand.width} height={detectedHand.height} />
+                detectedHand && <DetectedHand isDebug isFistState={isFistState} top={detectedHand.top} left={detectedHand.left} width={detectedHand.width} height={detectedHand.height} />
             }
             {substances ? 
                 substances.map((sub) => {

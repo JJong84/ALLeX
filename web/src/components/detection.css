@@ -18,6 +18,15 @@
   background-color: rgba(255, 255, 255, 0.2); /* 예시: 반투명 흰색 배경 */
 }
 
+#fist {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* video 위에 겹치도록 설정 */
+  pointer-events: none; /* div가 비디오 상호작용을 막지 않도록 */
+  background-color: rgba(255, 255, 255, 0.5); /* 예시: 반투명 흰색 배경 */
+}
+
 #lab-inventory-header {
   max-width: 508px;
   height: 64px;
