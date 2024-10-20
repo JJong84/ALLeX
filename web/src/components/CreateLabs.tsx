@@ -104,6 +104,17 @@ const CreateLab = () => {
     }
   };
 
+  const isMaterialDisabled = (material: SubstanceNames) => {
+    if (!selectedToolId) {
+      return true;
+    }
+    const substance = substances.find((s) => s.substance_id === selectedToolId);
+    if (substance?.case_type === "flask") {
+      return !["BTB", "메틸 오렌지", "페놀프탈레인"].includes(material);
+    }
+    return !["물", "암모니아", "염산"].includes(material);
+  }
+
   return (
     <div className="create-lab-container">
       {/* Title at the top */}
@@ -161,7 +172,7 @@ const CreateLab = () => {
               ) : (
                 materials.map(material => (
                   <div
-                    className="sidebar-button"
+                    className={`sidebar-button${isMaterialDisabled(material) ? " disabled" : ""}`}
                     key={material}
                     onClick={() => handleAssignSubstance(material)}
                     style={{
@@ -237,7 +248,7 @@ const CreateLab = () => {
                 onClick={() => setShowModal(false)}
                 disabled={!labName || !goal} // Disable button if inputs are empty
               >
-                Confirm
+                확인
               </button>
             </div>
           </div>

@@ -212,6 +212,12 @@
     justify-content: flex-start;
   }
 
+  .sidebar-button.disabled {
+    pointer-events: none;
+    /* background-color: #a3b1f5; */
+    color: rgba(255, 255, 255, 0.4);
+  }
+
   .sidebar-button:hover {
     background-color: #4363FF;
   }

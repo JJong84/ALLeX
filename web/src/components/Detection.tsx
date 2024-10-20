@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Human, { Config, Point } from '@vladmandic/human'
+import Human, { Config, HandResult, Point } from '@vladmandic/human'
 import DetectedHand from './DetectedHand';
 import { DEFAULT_SIZE, Inventory, ObjectType, Rectangle, SubstanceNames, SubstanceProps } from '../types';
 import SubstanceComp from './Substance';
@@ -21,7 +21,8 @@ const humanConfig: Partial<Config> = {
     backend: 'tensorflow'
 };
 
-const THRESHHOLD = 260;
+const THRESHHOLD_MAX = 210;
+const THRESHHOLD_MIN = 105;
 
 interface Props {
     inventory?: Inventory;
@@ -119,7 +120,6 @@ function Detection({inventory}: Props) {
             );
             totalDistance += distance;
         });
-        console.log(totalDistance);
         return totalDistance;
     };
 
@@ -136,8 +136,29 @@ function Detection({inventory}: Props) {
                 requestAnimationFrame(detectionLoop);
                 return;
             }
-            const firstHand = hand[0]; 
-            console.log(firstHand);
+            
+            const findLargestHand = (hand: HandResult[]) => {               
+                // 초기 값은 첫 번째 hand로 설정
+                let largestHand = hand[0];
+                let largestArea = largestHand.box[2] * largestHand.box[3]; // width * height
+                
+                // 모든 hand를 순회하면서 가장 큰 hand를 찾음
+                for (const h of hand) {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const [left, top, width, height] = h.box;
+                    // console.log(left, top);
+                    const area = width * height;
+                
+                    if (area > largestArea) {
+                    largestHand = h;
+                    largestArea = area;
+                    }
+                }
+                
+                return largestHand;
+            };
+
+            const firstHand = findLargestHand(hand);
             const [left, top, width, height] = firstHand.box;
             // console.log(resolution);
             if (!resolution.width || !resolution.height) {
@@ -152,8 +173,8 @@ function Detection({inventory}: Props) {
             })
 
             const fingerDistance = calculateFingerDistance(firstHand.keypoints);
-            
-            if (fingerDistance < THRESHHOLD) {
+            if (fingerDistance < THRESHHOLD_MAX && fingerDistance > THRESHHOLD_MIN) {
+                console.log(fingerDistance);
                 setIsFistState(true);
             } else {
                 setIsFistState(false);
