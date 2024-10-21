@@ -84,7 +84,40 @@ npm install
 ```sql
 CREATE DATABASE allex;
 USE allex;
--- Import the provided SQL file or use the following table schema examples in the project.
+-- Create the `labs` table
+CREATE TABLE labs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    lab_name VARCHAR(255) NOT NULL,
+    goal VARCHAR(255) NULL
+);
+
+-- Create the `substances` table
+CREATE TABLE substances (
+    substance_id INT AUTO_INCREMENT PRIMARY KEY,
+    substance_name VARCHAR(255) NOT NULL
+);
+
+-- Create the `lab_inventory` table
+CREATE TABLE lab_inventory (
+    entity_id INT AUTO_INCREMENT PRIMARY KEY,
+    lab_id INT,
+    substance_id INT,
+    x INT,
+    y INT,
+    case_type VARCHAR(255),
+    FOREIGN KEY (lab_id) REFERENCES labs(id) ON DELETE CASCADE,
+    FOREIGN KEY (substance_id) REFERENCES substances(substance_id) ON DELETE CASCADE
+);
+
+-- Create the `experiments` table
+CREATE TABLE experiments (
+    substance_id1 INT,
+    substance_id2 INT,
+    color_change VARCHAR(255),
+    explosion TINYINT,
+    FOREIGN KEY (substance_id1) REFERENCES substances(substance_id) ON DELETE CASCADE,
+    FOREIGN KEY (substance_id2) REFERENCES substances(substance_id) ON DELETE CASCADE
+);
 ```
 
 3. Update your MySQL credentials in the backend's `config.py` file:
