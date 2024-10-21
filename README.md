@@ -37,7 +37,7 @@
 ## Technology Stack
 
 - **Frontend**: React (TypeScript)
-- **Backend**: Node.js and Express for handling server-side logic, with a MySQL database for storing experiments, substances, and lab configurations.
+- **Backend**: Python and FastAPI for handling server-side logic, with a MySQL database for storing experiments, substances, and lab configurations.
 - **Interaction**: `@vladmandic/human` for real-time hand detection and gesture recognition
 - **REST API**: For communication between the frontend and backend
 
@@ -46,7 +46,7 @@
 ## Installation
 
 ### Prerequisites
-- Node.js (version 14 or above)
+- Python3
 - MySQL
 
 ### Clone the Repository
@@ -59,9 +59,11 @@ cd ALLeX
 ### Install Dependencies
 
 #### 1. Backend (API server)
-```bash
-cd server
-npm install
+
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install fastapi uvicorn sqlalchemy pymysql
 ```
 
 #### 2. Frontend (React App)
@@ -80,12 +82,12 @@ npm install
    - **lab_inventory**: Manages inventory for each lab.
 
 ```sql
-CREATE DATABASE alex;
-USE alex;
+CREATE DATABASE allex;
+USE allex;
 -- Import the provided SQL file or use the following table schema examples in the project.
 ```
 
-3. Update your MySQL credentials in the backend's `.env` file:
+3. Update your MySQL credentials in the backend's `config.py` file:
 
 ```
 DB_HOST=localhost
@@ -98,7 +100,7 @@ DB_NAME=alex
 
 ```bash
 cd server
-npm start
+uvicorn main:app --reload
 ```
 
 ### Start the Frontend
@@ -124,12 +126,23 @@ npm run dev
 ```
 AllEx/
 │
-├── server/                # Backend (Node.js, Express, MySQL)
-│   ├── src/
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   └── app.js             # Main backend entry point
+├── server/                # Backend (python, fastapi, MySQL)
+│   ├── .gitignore
+│   ├── .gitkeep
+│   ├── config.py
+│   ├── crud.py
+│   ├── database.py
+│   ├── main.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── routers
+│       ├── experiments.py
+│       ├── inventory.py
+│       ├── labs.py
+│       ├── substances.py
+│       └── __init__.py
+└── __pycache__
+    └── *.pyc        
 │
 ├── web/                   # Frontend (React, TypeScript)
 │   ├── public/
