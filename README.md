@@ -1,9 +1,9 @@
-
-
-# ALLeX 
+![image](https://github.com/user-attachments/assets/653b251b-c991-4fe0-afe3-f0ec93d166ad)
 ###     Web-based XR labs for <strong>ALL</strong> types of <strong>eX</strong>periments
 
 **AllEx** is a web-based immersive virtual lab platform that allows users to perform various experiments in an XR environment. It is developed as part of the [**SPARCS Science Hackathon 2024**](https://event.sparcs.org/dsf24).
+
+![image](https://github.com/user-attachments/assets/dd872090-b090-4cae-89c8-6e19a6781bbf)
 
 <p align="center">
   <a href="https://github.com/JJong84/ALLeX">
@@ -28,6 +28,8 @@
 ---
 
 ## Features
+![그림3 (1) (1) (2) (1)](https://github.com/user-attachments/assets/3f34c5c3-002d-4e5e-b1e6-da6cbca4c68b)
+![그림4](https://github.com/user-attachments/assets/d9dc0eeb-ab82-4613-9e7a-5fe214e1edce)
 - Web-based platform for performing interactive experiments.
 - Real-time hand tracking and gesture recognition using `@vladmandic/human`.
 - Backend powered by MySQL for managing lab setups, experiment data, and inventory.
