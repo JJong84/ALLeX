@@ -186,9 +186,7 @@ AllEx/
 │       ├── inventory.py
 │       ├── labs.py
 │       ├── substances.py
-│       └── __init__.py
-└── __pycache__
-    └── *.pyc        
+│       └── __init__.py    
 │
 ├── web/                   # Frontend (React, TypeScript)
 │   ├── public/
