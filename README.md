@@ -1,20 +1,31 @@
 ![image](https://github.com/user-attachments/assets/653b251b-c991-4fe0-afe3-f0ec93d166ad)
+---
+
+<p align="center">
+  <a href="https://github.com/JJong84/ALLeX">
+  </a>
+    <a href="https://al-le-x-fhxo.vercel.app/">Web</a>
+    <a>&emsp;&emsp;</a>
+    <a href="https://al-le-x-fhxo.vercel.app/">Live Demo</a>
+    <a>&emsp;&emsp;</a>
+    <a href="https://al-le-x-fhxo.vercel.app/">Video</a>
+  
+  </p>
+  
+
+
+</p>
+
+
 ###     Web-based XR labs for <strong>ALL</strong> types of <strong>eX</strong>periments
 
 **AllEx** is a web-based immersive virtual lab platform that allows users to perform various experiments in an XR environment. It is developed as part of the [**SPARCS Science Hackathon 2024**](https://event.sparcs.org/dsf24).
 
 ![image](https://github.com/user-attachments/assets/dd872090-b090-4cae-89c8-6e19a6781bbf)
 
-<p align="center">
-  <a href="https://github.com/JJong84/ALLeX">
-  </a>
-    <a href="https://namu.wiki/w/Hello%2C%20world!">Live Demo</a>
-    <a>&emsp;&emsp;</a>
-    <a href="https://namu.wiki/w/Hello%2C%20world!">Video</a>
-  </p>
-</p>
 
 ---
+
 
 ## Table of Contents
 1. [Features](#features)
